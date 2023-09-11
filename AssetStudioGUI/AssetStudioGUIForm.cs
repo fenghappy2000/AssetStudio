@@ -109,6 +109,9 @@ namespace AssetStudioGUI
             Logger.Default = logger;
             Progress.Default = new Progress<int>(SetProgressBarValue);
             Studio.StatusStripUpdate = StatusStripUpdate;
+
+			// 尝试加载命令行过来的文件
+			loadFile_Startup();
         }
 
         private void AssetStudioGUIForm_DragEnter(object sender, DragEventArgs e)
@@ -137,7 +140,21 @@ namespace AssetStudioGUI
                 BuildAssetStructures();
             }
         }
+		// 启动时打开双击的文件
+		private async void loadFile_Startup()
+		{
+			string [] arr = System.Environment.GetCommandLineArgs();
+			if(arr != null && arr.Length > 0) {
+				string [] files = new string[] { arr[1], };
+				ResetForm();
+				openDirectoryBackup = Path.GetDirectoryName(files[0]);
+				assetsManager.SpecifyUnityVersion = specifyUnityVersion.Text;
 
+				//Task.Run( async () => await loadFile_Param(delayMS, files) );
+				await Task.Run(() => assetsManager.LoadFiles(files));
+				BuildAssetStructures();
+			}
+		}
         private async void loadFile_Click(object sender, EventArgs e)
         {
             openFileDialog1.InitialDirectory = openDirectoryBackup;

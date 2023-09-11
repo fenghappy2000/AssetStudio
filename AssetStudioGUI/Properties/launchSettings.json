@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AssetStudioGUI": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\abtest\\assets_res_nopack_designer_levelres_commonres.uab"
+    }
+  }
+}
