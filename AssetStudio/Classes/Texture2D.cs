@@ -99,7 +99,14 @@ namespace AssetStudio
                 {
                     var m_ReadAllowed = reader.ReadBoolean();
                 }
+				// m_MipmapLimitGroupName string
+				if(version[0] >= 2022) {
+					reader.AlignStream();
+					var m_MipmapLimitGroupName = reader.ReadString();
+					reader.AlignStream();
+				}
             }
+
             if (version[0] > 2018 || (version[0] == 2018 && version[1] >= 2)) //2018.2 and up
             {
                 var m_StreamingMipmaps = reader.ReadBoolean();
