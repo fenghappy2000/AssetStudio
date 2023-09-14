@@ -144,8 +144,13 @@ namespace AssetStudioGUI
 		private async void loadFile_Startup()
 		{
 			string [] arr = System.Environment.GetCommandLineArgs();
-			if(arr != null && arr.Length > 0) {
-				string [] files = new string[] { arr[1], };
+			if(arr != null && arr.Length >= 2) {
+				string fileName = arr[1];
+				if(string.IsNullOrEmpty(fileName)) { return; }
+
+				if(File.Exists(fileName) == false) { return; }
+
+				string [] files = new string[] { fileName, };
 				ResetForm();
 				openDirectoryBackup = Path.GetDirectoryName(files[0]);
 				assetsManager.SpecifyUnityVersion = specifyUnityVersion.Text;
